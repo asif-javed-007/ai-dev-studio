@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -8,196 +9,228 @@ import {
   Search,
   Filter,
   Plus,
-  Code,
   Zap,
-  GitBranch,
-  Database,
-  Wallet,
-  Shield,
-  Terminal,
   Globe,
-  Sparkles,
   Brain,
   MessageSquare,
-  Building2,
-  Stethoscope,
-  ShoppingCart,
-  Lock,
-  Truck,
+  Shield,
+  Terminal,
   Cloud,
   Key,
-  Bot,
-  Cpu,
   Image,
-  MessageCircle,
-  Music,
-  Map,
   Mail,
   PieChart,
-  Share2,
-  BarChart,
-  LineChart as LineChartIcon,
-  Camera,
-  Video,
-  Megaphone
+  Megaphone,
+  GalleryHorizontal,
+  HandHeart,
+  ChartCandlestick,
+  GraduationCap,
+  MonitorCog,
+  Scale,
+  Warehouse
 } from "lucide-react";
 import { WorkflowTemplates } from "@/components/dashboard/workflow-templates";
 
 const industries = [
-  { 
-    id: "digital-marketing", 
-    name: "Digital Marketing", 
-    icon: Megaphone, 
-    description: "AI-powered content creation, automation, and analytics" 
+  {
+    id: "all",
+    name: "ALL",
+    icon: GalleryHorizontal,
+    description: "Show all AI tools"
   },
-  { 
-    id: "social-media", 
-    name: "Social Media", 
-    icon: Share2, 
-    description: "Automated posting, analytics, and engagement tools" 
+  {
+    id: "digital-marketing",
+    name: "Digital Marketing",
+    icon: Megaphone,
+    description: "Digital marketing engages audiences and drives growth through online strategies like SEO, social media, and email."
   },
-  { 
-    id: "content-creation", 
-    name: "Content Creation", 
-    icon: Image, 
-    description: "AI content generation, video editing, copywriting" 
+  {
+    id: "healthcare",
+    name: "Healthcare",
+    icon: HandHeart,
+    description: "Healthcare focuses on preventing, diagnosing, and treating illnesses to improve well-being."
   },
-  { 
-    id: "analytics", 
-    name: "Analytics & Data", 
-    icon: PieChart, 
-    description: "Marketing analytics, audience insights, tracking" 
+
+  {
+    id: "education",
+    name: "Education",
+    icon: GraduationCap,
+    description: "Education is the process of acquiring knowledge, skills, and values through teaching, learning, and experiences to foster personal and societal growth."
   },
-  { 
-    id: "email-marketing", 
-    name: "Email Marketing", 
-    icon: Mail, 
-    description: "Email automation, personalization, campaign management" 
+  {
+    id: "legal",
+    name: "Legal",
+    icon: Scale,
+    description: "Legal involves providing services related to laws, regulations, and dispute resolution to ensure compliance and protect rights."
+  },
+  {
+    id: "manufacturing",
+    name: "Manufacturing",
+    icon: MonitorCog,
+    description: "Manufacturing is the process of producing goods by transforming raw materials into finished products through efficient production methods."
+  },
+  {
+    id: "finance",
+    name: "Finance",
+    icon: ChartCandlestick,
+    description: "Finance manages money, investments, and assets to achieve economic goals and ensure stability."
+  },
+  {
+    id: "human-resources",
+    name: "Human Resources",
+    icon: ChartCandlestick,
+    description: "Finance manages money, investments, and assets to achieve economic goals and ensure stability."
+  },
+  {
+    id: "real-estate",
+    name: "Real Estate",
+    icon: Warehouse,
+    description: "Real estate involves buying, selling, and managing properties, focusing on maximizing value and meeting housing or commercial needs."
+  },
+  {
+    id: "retail",
+    name: "Retail",
+    icon: Mail,
+    description: "Retail involves selling goods directly to consumers through stores or online platforms, focusing on customer satisfaction and sales."
   }
 ];
 
 const aiTools = [
-  // Content Creation Tools
+  // Digital Marketing Tools
   {
     id: 1,
-    name: "Jasper AI",
-    description: "Advanced AI content generation for marketing and social media",
-    category: "Content Creation",
-    industry: "Digital Marketing",
-    price: 4900,
-    rating: 4.8,
-    downloads: 15000,
-    status: "Verified",
-    languages: ["All Major Languages"],
-    integrations: ["HubSpot", "WordPress", "Mailchimp"],
-    features: ["Blog Writing", "Social Media Posts", "Ad Copy", "Email Content"],
-    compliance: ["GDPR", "SOC 2"],
-    deployment: ["Cloud", "API"]
-  },
-  {
-    id: 2,
-    name: "Lumen5 Pro",
-    description: "AI-powered video creation for marketing and social media",
-    category: "Video Creation",
-    industry: "Digital Marketing",
-    price: 7900,
-    rating: 4.7,
-    downloads: 8500,
+    name: "AI Diagnosis Asisstant",
+    description: "An AI-powered tool that assists doctors in diagnosing diseases based on symptoms and medical history.",
+    industry: "Healthcare",
+    rating: 4.8/5,
     status: "Enterprise",
-    languages: ["English", "Spanish", "French", "German"],
-    integrations: ["YouTube", "Facebook", "LinkedIn"],
-    features: ["Video Generation", "Social Templates", "Brand Kit", "Stock Media"],
-    compliance: ["GDPR"],
+    languages: ["All Major Languages"],
+    features: ["Symptom Analysis", "Disease Prediction", "Patient History Integration"],
+    compliance: ["HIPAA", "GDPR"],
     deployment: ["Cloud"]
   },
-  // Marketing Automation
+  // Content Creation / Social Media Tools
+  {
+    id: 2,
+    name: "Virtual Health Coach",
+    description: "A virtual assistant that provides personalized health advice and tracks patient progress.",
+    industry: "Healthcare",
+    rating: 4.7/5,
+    status: "Verified",
+    languages: ["All Major Languages"],
+    features: ["Personalized Health Plans", "Medication Reminders", "Fitness Tracking."],
+    compliance: ["SOC 2", "HIPAA"],
+    deployment: ["Cloud"]
+  },
+  // Digital Marketing Tools
   {
     id: 3,
-    name: "HubSpot Integration",
-    description: "Complete marketing automation and CRM solution",
-    category: "Marketing Automation",
-    industry: "Digital Marketing",
-    price: 12900,
-    rating: 4.9,
-    downloads: 25000,
-    status: "Enterprise",
+    name: "AI Learning Path Generator",
+    description: "Creates personalized learning paths for students based on their strengths and weaknesses.",
+    industry: "Education",
+    rating: 4.7/5,
+    status: "Verified",
     languages: ["All Major Languages"],
-    integrations: ["Salesforce", "Gmail", "Slack", "Zoom"],
-    features: ["Email Marketing", "CRM", "Analytics", "Landing Pages"],
-    compliance: ["GDPR", "SOC 2", "HIPAA"],
-    deployment: ["Cloud", "Enterprise"]
+    features: ["Adaptive Learning", "Progress Tracking", "Skill Assessment"],
+    compliance: ["GDPR", "FERPA"],
+    deployment: ["Cloud"]
   },
-  // Analytics Tools
+  // Analytics & Data Tools
   {
     id: 4,
-    name: "Google Analytics SDK",
-    description: "Advanced marketing analytics and tracking integration",
-    category: "Analytics",
-    industry: "Digital Marketing",
-    price: 0,
-    rating: 4.9,
-    downloads: 50000,
+    name: "Virtual Classroom Assistant",
+    description: "Assists teachers in managing virtual classrooms and engaging students.",
+    industry: "Analytics & Data",
+    rating: 4.6/5,
     status: "Verified",
     languages: ["All Major Languages"],
-    integrations: ["Google Ads", "BigQuery", "Data Studio"],
-    features: ["Real-time Analytics", "Audience Insights", "Conversion Tracking"],
-    compliance: ["GDPR", "SOC 2"],
+    features: ["Attendance Tracking", "Real-Time Feedback", "interactive quizzes."],
+    compliance: ["GDPR", "FERPA"],
     deployment: ["Cloud", "SDK"]
   },
-  // Ad Platform SDKs
+  // Social Media Tools
   {
     id: 5,
-    name: "Meta Marketing SDK",
-    description: "Facebook & Instagram advertising and analytics toolkit",
-    category: "Social Media",
-    industry: "Digital Marketing",
-    price: 0,
-    rating: 4.8,
-    downloads: 35000,
-    status: "Verified",
-    languages: ["All Major Languages"],
-    integrations: ["Instagram", "WhatsApp", "Facebook Ads"],
-    features: ["Ad Management", "Audience Targeting", "Performance Analytics"],
-    compliance: ["GDPR"],
-    deployment: ["SDK", "API"]
-  },
-  // AI Analytics
-  {
-    id: 6,
-    name: "IBM Watson Campaign",
-    description: "AI-powered marketing campaign optimization",
-    category: "AI Analytics",
-    industry: "Digital Marketing",
-    price: 15900,
-    rating: 4.7,
-    downloads: 5000,
+    name: "AI Fraud Detection System",
+    description: "Detects fraudulent transactions in real-time using advanced machine learning algorithms.",
+    industry: "Finance",
+    rating: 4.9/5,
     status: "Enterprise",
     languages: ["All Major Languages"],
-    integrations: ["Salesforce", "Adobe Analytics", "Mailchimp"],
-    features: ["Sentiment Analysis", "Campaign Optimization", "Predictive Analytics"],
-    compliance: ["GDPR", "SOC 2", "HIPAA"],
-    deployment: ["Cloud", "Enterprise"]
+    features: ["Transaction Monitoring", "Anomaly Detection", "Risk Scoring"],
+    compliance: ["PCI DSS", "GDPR"],
+    deployment: ["Cloud"]
   },
-  // Email Marketing
+  // Analytics & Data Tools
   {
-    id: 7,
-    name: "ActiveCampaign Plus",
-    description: "Advanced email marketing automation platform",
-    category: "Email Marketing",
-    industry: "Digital Marketing",
-    price: 5900,
-    rating: 4.8,
-    downloads: 20000,
+    id: 6,
+    name: "Robo-Advisor",
+    description: "AProvides automated investment advice based on user risk tolerance and financial goals.",
+    industry: "Analytics & Data",
+    rating: 4.7/5,
     status: "Verified",
     languages: ["All Major Languages"],
-    integrations: ["Shopify", "WordPress", "Zapier"],
-    features: ["Email Automation", "CRM", "Landing Pages", "Forms"],
+    features: ["Portfolio Management", "Risk Assessment", "Financial Planning"],
+    compliance: ["GDPR", "SEC"],
+    deployment: ["Cloud"]
+  },
+  // Email Marketing Tools
+  {
+    id: 7,
+    name: "AI Predictive Maintenance",
+    description: "Predicts equipment failures and schedules maintenance before breakdowns occur.",
+    industry: "Manufacturing",
+    rating: 4.9/5,
+    status: "Enterprise",
+    languages: ["All Major Languages"],
+    features: ["Equipment Monitoring", "Failure Prediction", "Reorder Alerts"],
     compliance: ["GDPR", "SOC 2"],
+    deployment: ["Cloud"]
+  },
+  {
+    id: 8,
+    name: "AI Inventory Manager",
+    description: "Optimizes inventory levels and predicts demand using AI algorithms.",
+    industry: "Retail",
+    rating: 4.8/5,
+    status: "Enterprise",
+    languages: ["All Major Languages"],
+    features: ["Demand Forecasting", "stock Optimization", "Reorder Alerts"],
+    compliance: ["GDPR", "SOC 2"],
+    deployment: ["Cloud"]
+  },
+  {
+    id: 9,
+    name: "Personalized Shopping Assistant",
+    description: "Offers personalized product recommendations to customers based on their browsing history.",
+    industry: "Retail",
+    rating: 4.7/5,
+    status: "Verified",
+    languages: ["All Major Languages"],
+    features: ["Product Recommendations", "Customer Profiling", "Purchase Predictions."],
+    compliance: ["GDPR", "CCPA"],
     deployment: ["Cloud"]
   }
 ];
 
 export default function Marketplace() {
+  // State to track the selected industry (using industry id)
+  const [selectedIndustry, setSelectedIndustry] = useState("");
+
+  // Get the industry name corresponding to the selected id
+  const selectedIndustryName = industries.find(
+    (ind) => ind.id === selectedIndustry
+  )?.name;
+
+  // Modify filtering logic to show all tools when "ALL" is selected
+  const filteredTools =
+    selectedIndustry === "all" || !selectedIndustry
+      ? aiTools
+      : aiTools.filter(
+        (tool) =>
+          tool.industry.toLowerCase() === selectedIndustryName?.toLowerCase()
+      );
+
   return (
     <div className="p-6 space-y-6">
       {/* Hero Section */}
@@ -228,12 +261,12 @@ export default function Marketplace() {
               placeholder="Search AI tools, APIs, or solutions in any language..."
             />
           </div>
-          <Select>
+          <Select onValueChange={(value) => setSelectedIndustry(value)}>
             <SelectTrigger className="w-[180px]">
               <SelectValue placeholder="Industry" />
             </SelectTrigger>
             <SelectContent>
-              {industries.map(industry => (
+              {industries.map((industry) => (
                 <SelectItem key={industry.id} value={industry.id}>
                   <div className="flex items-center gap-2">
                     <industry.icon className="h-4 w-4" />
@@ -259,9 +292,11 @@ export default function Marketplace() {
         {industries.map((industry) => (
           <Card
             key={industry.id}
-            className="hover:bg-accent/50 cursor-pointer transition-colors"
+            onClick={() => setSelectedIndustry(industry.id)}
+            className={`cursor-pointer transition-colors ${selectedIndustry === industry.id ? "bg-accent/50" : "hover:bg-accent/50"
+              }`}
           >
-            <CardContent className="p-4">
+            <CardContent className="p-3">
               <div className="flex items-center gap-2 mb-2">
                 <industry.icon className="h-5 w-5 text-primary" />
                 <h3 className="font-medium">{industry.name}</h3>
@@ -274,7 +309,7 @@ export default function Marketplace() {
         ))}
       </div>
 
-      {/* Add Tabs for different sections */}
+      {/* Tabs for different sections */}
       <Tabs defaultValue="solutions" className="w-full">
         <TabsList>
           <TabsTrigger value="solutions">AI Solutions</TabsTrigger>
@@ -286,7 +321,7 @@ export default function Marketplace() {
           <div className="grid grid-cols-3 gap-6">
             <div className="col-span-2">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {aiTools.map((tool) => (
+                {filteredTools.map((tool) => (
                   <Card key={tool.id} className="relative overflow-hidden">
                     <div className="absolute top-2 right-2 flex gap-2">
                       <Badge className="bg-blue-500">Addvizer Q</Badge>
@@ -296,12 +331,16 @@ export default function Marketplace() {
                     </div>
                     <CardHeader>
                       <div className="flex items-center justify-between mb-2">
-                        <Badge variant="outline">{tool.category}</Badge>
-                        <Badge className={
-                          tool.status === "Verified" ? "bg-green-500" :
-                            tool.status === "Enterprise" ? "bg-purple-500" :
-                              "bg-yellow-500"
-                        }>
+                        <Badge variant="outline">{tool.industry}</Badge>
+                        <Badge
+                          className={
+                            tool.status === "Verified"
+                              ? "bg-green-500"
+                              : tool.status === "Enterprise"
+                                ? "bg-purple-500"
+                                : "bg-yellow-500"
+                          }
+                        >
                           {tool.status}
                         </Badge>
                       </div>
@@ -344,14 +383,6 @@ export default function Marketplace() {
                           ))}
                         </div>
                         <div className="flex justify-between items-center mt-4">
-                          <div>
-                            <p className="text-sm text-muted-foreground">
-                              {tool.downloads} downloads
-                            </p>
-                            <p className="font-bold">
-                              ${(tool.price / 100).toFixed(2)}/mo
-                            </p>
-                          </div>
                           <Button>
                             <Terminal className="h-4 w-4 mr-2" />
                             Try Now
@@ -404,19 +435,11 @@ export default function Marketplace() {
                 <CardContent>
                   <div className="space-y-4">
                     <div className="flex items-center gap-2 text-sm">
-                      <Lock className="h-4 w-4 text-green-500" />
-                      GDPR Compliant
-                    </div>
-                    <div className="flex items-center gap-2 text-sm">
-                      <Shield className="h-4 w-4 text-green-500" />
-                      SOC 2 Certified
-                    </div>
-                    <div className="flex items-center gap-2 text-sm">
                       <Key className="h-4 w-4 text-green-500" />
                       End-to-End Encryption
                     </div>
                     <Button variant="outline" className="w-full">
-                      <Lock className="h-4 w-4 mr-2" />
+                      <Shield className="h-4 w-4 mr-2" />
                       View Security Details
                     </Button>
                   </div>
